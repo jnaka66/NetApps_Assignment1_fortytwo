@@ -20,7 +20,9 @@ def play_ibm_sound(phrase):
                 voice='en-US_AllisonV3Voice',
                 accept='audio/wav'
             ).get_result().content)
-
+from playsound import playsound
+playsound('hello_world.wav')
+'''
     import winsound
     import sys
 
@@ -31,3 +33,4 @@ def play_ibm_sound(phrase):
     import time
     time.sleep(3)
     os.system("taskkill /IM wmplayer.exe ")
+'''

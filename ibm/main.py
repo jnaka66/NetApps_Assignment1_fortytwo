@@ -1,3 +1,3 @@
-from test import play_ibm_sound
+from play_ibm_sound import play_ibm_sound
 
-play_ibm_sound("pe")
+play_ibm_sound("peen")
