@@ -4,6 +4,7 @@ import pickle
 from cryptography.fernet import Fernet
 from play_ibm_sound import play_ibm_sound
 import hashlib
+import wolframalpha
 
 
 args = argparse.ArgumentParser()
@@ -35,13 +36,17 @@ while True:
             print('[Server05] –Decrypt Key: ', key)
             f = Fernet(key)
             decrypted = f.decrypt(unpickled[1])
-            print('[Server06] –Plain Text: ', decrypted)
-            print('[Server07] –Speaking Question: ', decrypted)
+            print('[Server06] –Plain Text: ', decrypted.decode('utf-8'))
+            print('[Server07] –Speaking Question: ', decrypted.decode('utf-8'))
             play_ibm_sound(decrypted.decode('utf-8'))
             print('[Server08] –Sending question to Wolframalpha')
             #send to wolfram
-            print('[Server09] –Received answer from Wolframalpha: <WOLFRAMALPHA_ANSWER>')
-            answer='test answer'
+            app_id = '78R287-T75PALE28E' # App id 
+            client = wolframalpha.Client(app_id) # Instance of wolf ram alpha client class
+            print('Test: ' + decrypted.decode('utf-8'))
+            res = client.query(decrypted.decode('utf-8')) # Stores the response from wolf ram alpha
+            answer = next(res.results).text # Includes only text from the response
+            print('[Server09] –Received answer from Wolframalpha: '+answer)
             #use same key as before
             print('[Server10] –Encryption Key: ', key)
             f = Fernet(key)
