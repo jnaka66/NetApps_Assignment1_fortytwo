@@ -1,0 +1,6 @@
+TWITTER_ACCESS_TOKEN = '1440726244102864904-H36HeQI7VU50qjdTRcvSnazHackPU0'
+TWITTER_ACCESS_TOKEN_SECRET = 'tS41RWtbpTYB5hbLQPCOdSY5gnruQm2w8QiFsew9sPsnF'
+# consumer_key = "i8QkhVxn5Dk8oh4XQgNPwd27l"
+#     consumer_secret = "AJnvvFcfHcKQ3bwFLw69cQdWb8EGcw2DQ6Yb6RkKKqitWUUUIE"
+#     access_key = "1440726244102864904-H36HeQI7VU50qjdTRcvSnazHackPU0"
+#     access_secret = "tS41RWtbpTYB5hbLQPCOdSY5gnruQm2w8QiFsew9sPsnF"
