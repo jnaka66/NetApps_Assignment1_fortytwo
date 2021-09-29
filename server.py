@@ -15,7 +15,7 @@ args = args.parse_args()
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind(('',int(args.server_port)))
-msg = "[Server01] –Created socket at " + str(serversocket.getsockname()[0]) + " on port " + str(args.server_port)
+msg = "[Server01] –Created socket at " + str(socket.gethostbyname(socket.gethostname())) + " on port " + str(args.server_port)
 print(msg)
 serversocket.listen(5)
 print("[Server02] –Listening for client connections")
@@ -29,34 +29,33 @@ while True:
         l=1
         while(l):
             pickled = clientsocket.recv(args.socket_size)
-            print(pickled)
-            unpickled = pickle.loads(pickled)
-            print('[Server04] –Received data: ', unpickled)
-            key = unpickled[0]
-            print('[Server05] –Decrypt Key: ', key)
-            f = Fernet(key)
-            decrypted = f.decrypt(unpickled[1])
-            print('[Server06] –Plain Text: ', decrypted.decode('utf-8'))
-            print('[Server07] –Speaking Question: ', decrypted.decode('utf-8'))
-            play_ibm_sound(decrypted.decode('utf-8'))
-            print('[Server08] –Sending question to Wolframalpha')
-            #send to wolfram
-            app_id = '78R287-T75PALE28E' # App id 
-            client = wolframalpha.Client(app_id) # Instance of wolf ram alpha client class
-            print('Test: ' + decrypted.decode('utf-8'))
-            res = client.query(decrypted.decode('utf-8')) # Stores the response from wolf ram alpha
-            answer = next(res.results).text # Includes only text from the response
-            print('[Server09] –Received answer from Wolframalpha: '+answer)
-            #use same key as before
-            print('[Server10] –Encryption Key: ', key)
-            f = Fernet(key)
-            encrypted = f.encrypt(answer.encode('utf-8'))
-            print('[Server11] –Cipher Text: ', encrypted)
-            checksum = hashlib.md5(answer.encode()).hexdigest()
-            print('[Server12] –Generated MD5 Checksum: ', checksum)
-            answer_payload = (encrypted, checksum)
-            print('[Server13] –Answer payload: ', answer_payload)
-            pickled = pickle.dumps(answer_payload)
-            print('[Server14] –Sending answer: ', pickled)
-            clientsocket.sendto(pickled, address)
+            if(pickled is not None):
+                unpickled = pickle.loads(pickled)
+                print('[Server04] –Received data: ', unpickled)
+                key = unpickled[0]
+                print('[Server05] –Decrypt Key: ', key.decode('utf-8'))
+                f = Fernet(key)
+                decrypted = f.decrypt(unpickled[1])
+                print('[Server06] –Plain Text: ', decrypted.decode('utf-8'))
+                print('[Server07] –Speaking Question: ', decrypted.decode('utf-8'))
+                play_ibm_sound(decrypted.decode('utf-8'))
+                print('[Server08] –Sending question to Wolframalpha')
+                #send to wolfram
+                app_id = '78R287-T75PALE28E' # App id
+                client = wolframalpha.Client(app_id) # Instance of wolf ram alpha client class
+                res = client.query(decrypted.decode('utf-8')) # Stores the response from wolf ram alpha
+                answer = next(res.results).text # Includes only text from the response
+                print('[Server09] –Received answer from Wolframalpha: '+answer)
+                #use same key as before
+                print('[Server10] –Encryption Key: ', key.decode('utf-8'))
+                f = Fernet(key)
+                encrypted = f.encrypt(answer.encode('utf-8'))
+                print('[Server11] –Cipher Text: ', encrypted.decode('utf-8'))
+                checksum = hashlib.md5(answer.encode()).hexdigest()
+                print('[Server12] –Generated MD5 Checksum: ', checksum)
+                answer_payload = (encrypted, checksum)
+                print('[Server13] –Answer payload: ', answer_payload)
+                pickled = pickle.dumps(answer_payload)
+                print('[Server14] –Sending answer: ', pickled)
+                clientsocket.sendto(pickled, address)
 serversocket.close()

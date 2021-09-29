@@ -20,17 +20,14 @@ def play_ibm_sound(phrase):
                 voice='en-US_AllisonV3Voice',
                 accept='audio/wav'
             ).get_result().content)
+
+        #playsound for use on Linux
 # from playsound import playsound
 # playsound('hello_world.wav')
 
-    import winsound
-    import sys
-
-    # for playing note.mp3 file
-    #winsound.PlaySound("C:\\Users\\Admin\\PycharmProjects\\netapps42\\hello_world.wav",winsound.SND_ASYNC)
-
+    #following is janky way to play on windows
     os.system("start hello_world.wav")
     import time
     time.sleep(3)
-    # os.system("taskkill /IM wmplayer.exe ")
+    os.system("taskkill /IM wmplayer.exe ")
 
