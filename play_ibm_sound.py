@@ -2,6 +2,7 @@ def play_ibm_sound(phrase):
 
     from ibm_watson import TextToSpeechV1
     import os
+    from playsound import playsound
     from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
     from IBM_API_key import url, key
 
@@ -22,12 +23,11 @@ def play_ibm_sound(phrase):
             ).get_result().content)
 
         #playsound for use on Linux
-# from playsound import playsound
-# playsound('hello_world.wav')
 
-    #following is janky way to play on windows
-    os.system("start hello_world.wav")
-    import time
-    time.sleep(3)
-    os.system("taskkill /IM wmplayer.exe ")
+        playsound('hello_world.wav')
 
+    # #following is janky way to play on windows
+    # os.system("start hello_world.wav")
+    # import time
+    # time.sleep(3)
+    # os.system("taskkill /IM wmplayer.exe ")

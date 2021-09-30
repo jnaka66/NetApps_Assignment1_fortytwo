@@ -1,8 +1,14 @@
 # import modules
-from config import *
+from keys import *
 import pandas as pd
 import tweepy
+# from tweepy.streaming import StreamListener
+import string
 
+class SL(tweepy.Stream):
+
+    def on_status(self, status):
+        print(status.text)
 
 # function to display data of each tweet
 def printtweetdata(n, ith_tweet):
@@ -20,14 +26,14 @@ def printtweetdata(n, ith_tweet):
 
 
 # function to perform data extraction
-def scrape(words, date_since, numtweet):
+def scrape(words, numtweet):
     # Creating DataFrame using pandas
     db = pd.DataFrame(columns=['username', 'description', 'location', 'following',
                                'followers', 'totaltweets', 'retweetcount', 'text', 'hashtags'])
 
     # We are using .Cursor() to search through twitter for the required tweets.
     # The number of tweets can be restricted using .items(number of tweets)
-    tweets = tweepy.Cursor(api.search, q=words, lang="en", since=date_since, tweet_mode='extended').items(numtweet)
+    tweets = tweepy.Cursor(api.search_tweets, q=words, count=5, lang="en").items(numtweet)
 
     # .Cursor() returns an iterable object. Each item in
     # the iterator has various attributes that you can access to
@@ -50,10 +56,7 @@ def scrape(words, date_since, numtweet):
 
         # Retweets can be distinguished by a retweeted_status attribute,
         # in case it is an invalid reference, except block will be executed
-        try:
-            text = tweet.retweeted_status.full_text
-        except AttributeError:
-            text = tweet.full_text
+        text = tweet.text
         hashtext = list()
         for j in range(0, len(hashtags)):
             hashtext.append(hashtags[j]['text'])
@@ -69,27 +72,31 @@ def scrape(words, date_since, numtweet):
     filename = 'scraped_tweets.csv'
 
     # we will save our database as a CSV file.
-    db.to_csv(filename)
+    # db.to_csv(filename)
 
 
 if __name__ == '__main__':
     # Enter your own credentials obtained
     # from your developer account
-    consumer_key = "i8QkhVxn5Dk8oh4XQgNPwd27l"
-    consumer_secret = "AJnvvFcfHcKQ3bwFLw69cQdWb8EGcw2DQ6Yb6RkKKqitWUUUIE"
+    #consumer_key = "i8QkhVxn5Dk8oh4XQgNPwd27l"
+    #consumer_secret = "AJnvvFcfHcKQ3bwFLw69cQdWb8EGcw2DQ6Yb6RkKKqitWUUUIE"
     # access_key = "1440726244102864904-H36HeQI7VU50qjdTRcvSnazHackPU0"
     # access_secret = "tS41RWtbpTYB5hbLQPCOdSY5gnruQm2w8QiFsew9sPsnF"
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
-    api = tweepy.API(auth)
+    auth = tweepy.OAuthHandler(API_key, API_key_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth, wait_on_rate_limit=True)
 
     # Enter Hashtag and initial date
-    print("Enter Twitter HashTag to search for")
-    words = input()
-    print("Enter Date since The Tweets are required in yyyy-mm--dd")
-    date_since = input()
+    # print("Enter Twitter HashTag to search for")
+    # words = input()
+    # print("Enter Date since The Tweets are required in yyyy-mm--dd")
+    # date_since = input()
+    words = "#ECE4564T13"
+
 
     # number of tweets you want to extract in one run
     numtweet = 5
-    scrape(words, date_since, numtweet)
+    #scrape(words, numtweet)
+    myStream = SL(API_key, API_key_secret, access_token, access_token_secret)
+    myStream.filter(track = ["#ECE4564T13"], threaded=True)
     print('Scraping has completed!')
