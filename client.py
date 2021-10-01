@@ -19,7 +19,7 @@ flag = True
 while True:
     print("[Client02] –Listening for tweets from Twitter API that contain questions")
     if(flag):#found tweet
-        tweet_text = 'What is the capital of India?'
+        tweet_text = 'This is a placeholder'
         print("[Client03] –New question found: ", tweet_text)
         key = Fernet.generate_key()#generate key
         print("[Client05] –Generated Encryption Key: ", key.decode('utf-8'))
