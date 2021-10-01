@@ -11,6 +11,17 @@ bearer_token = "AAAAAAAAAAAAAAAAAAAAAACjUAEAAAAArzjrsvvairyuEPrhiu3H7XZBL%2Fs%3D
 access_token = "1442912806517477377-OXUwVa02py9KgXmjAHCe9k3BTdyROD"
 access_token_secret = "M8yI8WFAhdeHU8tuwj5hlAtXzC00XhxMp8jmf8B6voM53"
 """
+'''
+# Tyler's Twitter
+#Consumer Keys
+API_key = "i8QkhVxn5Dk8oh4XQgNPwd27l"
+API_key_secret = "AJnvvFcfHcKQ3bwFLw69cQdWb8EGcw2DQ6Yb6RkKKqitWUUUIE"
+#Authentication Token
+bearer_token = "AAAAAAAAAAAAAAAAAAAAANXdTwEAAAAAO3sPJ1tYdLtLkGLzYwqxoGq7wo8%3DFWU11qgkX4mUxQT1VXzJ86nLTfjoCLocxJX8JeUIFgG7zf97vI"
+# Access Token and Secret
+access_token = "1440726244102864904-H36HeQI7VU50qjdTRcvSnazHackPU0"
+access_token_secret = "tS41RWtbpTYB5hbLQPCOdSY5gnruQm2w8QiFsew9sPsnF"
+'''
 # Jeremys Twitter:
 #Consumer Keys
 API_key = 'jhrsebJuvuOLBxlByXOsUMBeu'

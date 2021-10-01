@@ -5,7 +5,7 @@ from cryptography.fernet import Fernet
 from play_ibm_sound import play_ibm_sound
 import hashlib
 import wolframalpha
-from IBM_API_key import wolfkey
+from keys import appID
 
 
 args = argparse.ArgumentParser()
@@ -42,7 +42,7 @@ while True:
                 play_ibm_sound(decrypted.decode('utf-8'))
                 print('[Server08] –Sending question to Wolframalpha')
                 #send to wolfram
-                app_id = wolfkey # App id
+                app_id = appID # App id
                 client = wolframalpha.Client(app_id) # Instance of wolf ram alpha client class
                 res = client.query(decrypted.decode('utf-8')) # Stores the response from wolf ram alpha
                 try:
