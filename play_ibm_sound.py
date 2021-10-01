@@ -14,7 +14,7 @@ def play_ibm_sound(phrase):
     text_to_speech.set_service_url(url)
 
 
-    with open('hello_world.wav', 'wb') as audio_file:
+    with open('hello_world.wav', 'wb+') as audio_file:
         audio_file.write(
             text_to_speech.synthesize(
                 phrase,
@@ -25,9 +25,10 @@ def play_ibm_sound(phrase):
         #playsound for use on Linux
 
         playsound('hello_world.wav')
-
+'''
     # #following is janky way to play on windows
-    # os.system("start hello_world.wav")
-    # import time
-    # time.sleep(3)
-    # os.system("taskkill /IM wmplayer.exe ")
+    os.system("start hello_world.wav")
+    import time
+    time.sleep(3)
+    os.system("taskkill /IM wmplayer.exe ")
+'''
