@@ -3,6 +3,7 @@ def play_ibm_sound(phrase):
     from ibm_watson import TextToSpeechV1
     import os
     from playsound import playsound
+    import vlc
     from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
     from IBM_API_key import url, key
 
@@ -21,10 +22,16 @@ def play_ibm_sound(phrase):
                 voice='en-US_AllisonV3Voice',
                 accept='audio/wav'
             ).get_result().content)
+        
+        #play audio on the raspi with vlc
+        p = vlc.MediaPlayer("hello_world.wav")
+        p.play()
 
+'''
         #playsound for use on Linux
 
         playsound('hello_world.wav')
+'''
 '''
     # #following is janky way to play on windows
     os.system("start hello_world.wav")
