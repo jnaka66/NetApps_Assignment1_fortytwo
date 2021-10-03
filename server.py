@@ -2,11 +2,35 @@ import socket
 import argparse
 import pickle
 from cryptography.fernet import Fernet
-from play_ibm_sound import play_ibm_sound
 import hashlib
 import wolframalpha
-from keys import appID
+from ServerKeys import appID
 
+def play_ibm_sound(phrase):
+    from ibm_watson import TextToSpeechV1
+    import os
+    from playsound import playsound
+    import vlc
+    from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+    from ServerKeys import ibm_url, ibm_key
+
+    authenticator = IAMAuthenticator(ibm_key)
+    text_to_speech = TextToSpeechV1(
+        authenticator=authenticator
+    )
+    text_to_speech.set_service_url(ibm_url)
+
+    with open('hello_world.wav', 'wb+') as audio_file:
+        audio_file.write(
+            text_to_speech.synthesize(
+                phrase,
+                voice='en-US_AllisonV3Voice',
+                accept='audio/wav'
+            ).get_result().content)
+
+        # play audio on the raspi with vlc
+        p = vlc.MediaPlayer("hello_world.wav")
+        p.play()
 
 args = argparse.ArgumentParser()
 args.add_argument("-sp", "--server_port", help="Server port", type=int)
